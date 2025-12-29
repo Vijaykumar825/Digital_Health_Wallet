@@ -12,26 +12,26 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
 
-  const submit = async (e) => {
-    e.preventDefault(); // 🔥 prevents page navigation
+  async function submit(e) {
+    e.preventDefault();
     setErr("");
 
     try {
-      const res = await api.post("/api/auth/register", {
+      // ✅ NO /api here
+      const res = await api.post("/auth/register", {
         name,
         email,
         password,
       });
 
-      login(res.data);
+      // ✅ res is already JSON
+      login(res);
       navigate("/");
-    } catch (error) {
-      console.error("REGISTER ERROR:", error?.response?.data || error.message);
-      setErr(
-        error?.response?.data?.message || "Registration failed. Try again."
-      );
+    } catch (e) {
+      console.error("REGISTER ERROR:", e.message);
+      setErr("Registration failed. Try again.");
     }
-  };
+  }
 
   return (
     <div className="max-w-sm mx-auto">
@@ -42,7 +42,6 @@ export default function Register() {
           <label className="label">Name</label>
           <input
             className="input"
-            placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -54,7 +53,6 @@ export default function Register() {
           <input
             className="input"
             type="email"
-            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -66,7 +64,6 @@ export default function Register() {
           <input
             className="input"
             type="password"
-            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
