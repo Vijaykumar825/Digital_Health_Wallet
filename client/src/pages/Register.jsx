@@ -13,7 +13,6 @@ export default function Register() {
 
   async function submit(e) {
     e.preventDefault();
-    console.log("Register submit fired", { name, email });
     setErr("");
     try {
       const res = await api.post("/auth/register", { name, email, password });
@@ -57,9 +56,7 @@ export default function Register() {
           />
         </div>
         {err && <div className="text-red-600 text-sm">{err}</div>}
-        <button type="submit" className="btn-primary">
-          Register
-        </button>
+        <button className="btn-primary">Register</button>
       </form>
       <p className="mt-3 text-sm">
         Have an account?{" "}
