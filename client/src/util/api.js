@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_URL; // MUST be full backend URL
+const API_BASE = import.meta.env.VITE_API_URL;
 
 if (!API_BASE) {
   throw new Error("VITE_API_URL is not defined");
@@ -20,25 +20,26 @@ class ApiClient {
     return h;
   }
 
+  async get(path) {
+    const res = await fetch(`${API_BASE}${path}`, {
+      headers: this.headers(),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return res.json();
+  }
+
   async post(path, body) {
     const res = await fetch(`${API_BASE}${path}`, {
       method: "POST",
       headers: this.headers(),
       body: JSON.stringify(body),
     });
-
-    if (!res.ok) throw new Error(await res.text());
-    return res.json();
-  }
-
-  async get(path) {
-    const res = await fetch(`${API_BASE}${path}`, {
-      headers: this.headers(),
-    });
-
     if (!res.ok) throw new Error(await res.text());
     return res.json();
   }
 }
 
 export const api = new ApiClient();
+
+// 👇 ADD THIS BACK
+export const apiUrl = (path) => `${API_BASE}${path}`;
