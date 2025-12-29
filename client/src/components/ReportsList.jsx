@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { api } from "../util/api.js";
+import { api, apiUrl } from "../util/api.js";
 import { useAuth } from "../state/AuthContext.jsx";
 
 export default function ReportsList({ onSelect, onShare }) {
@@ -121,7 +121,7 @@ export default function ReportsList({ onSelect, onShare }) {
             )}
             <a
               className="btn-primary"
-              href={`/api/reports/${r.id}/download`}
+              href={apiUrl(`/reports/${r.id}/download`)}
               target="_blank"
               rel="noreferrer"
             >

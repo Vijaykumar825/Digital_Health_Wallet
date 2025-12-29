@@ -1,4 +1,5 @@
 import React from "react";
+import { apiUrl, uploadsUrl } from "../util/api.js";
 
 export default function ReportPreview({ report }) {
   if (!report)
@@ -11,7 +12,7 @@ export default function ReportPreview({ report }) {
 
   const isPdf = report.mime_type === "application/pdf";
   const isImage = report.mime_type?.startsWith("image/");
-  const fileUrl = `/uploads/${report.stored_name}`;
+  const fileUrl = uploadsUrl(report.stored_name);
 
   return (
     <div className="card">
@@ -21,7 +22,7 @@ export default function ReportPreview({ report }) {
         </h3>
         <a
           className="btn-primary"
-          href={`/api/reports/${report.id}/download`}
+          href={apiUrl(`/reports/${report.id}/download`)}
           target="_blank"
           rel="noreferrer"
         >
